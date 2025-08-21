@@ -6,16 +6,11 @@
 // Jest DOM matchers
 // src/setupTests.ts
 import "@testing-library/jest-dom";
-
 // Mock Chart.js to avoid ES module issues in tests
 jest.mock("chart.js", () => ({
   Chart: class MockChart {
     static register = jest.fn();
-    static defaults: {
-      font: { family: string };
-      responsive: boolean;
-      maintainAspectRatio: boolean;
-    } = {
+    static defaults: any = {
       font: { family: "" },
       responsive: true,
       maintainAspectRatio: false,

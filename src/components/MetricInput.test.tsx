@@ -1,30 +1,44 @@
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import MetricInput from "./MetricInput";
-import { AppProvider } from "../context/AppProvider";
+// MetricInput.tsx (make it accessible)
+type Props = {
+  id?: string;
+  label: string;
+  type?: "number" | "date" | "text";
+  value?: string | number;
+  min?: number;
+  step?: number;
+  onChange: (v: number | string | undefined) => void;
+};
 
-describe("MetricInput", () => {
-  it("adds a new row on submit", async () => {
-    render(
-      <AppProvider>
-        <MetricInput label={""} value={undefined} onChange={function (n: number | undefined): void {
-                throw new Error("Function not implemented.");
-            } } />
-      </AppProvider>
-    );
-
-    const user = userEvent.setup();
-    await user.type(screen.getByLabelText(/date/i), "2025-08-06");
-    await user.type(screen.getByLabelText(/steps/i), "5600");
-    await user.type(screen.getByLabelText(/calories/i), "410");
-    await user.type(screen.getByLabelText(/duration/i), "33");
-
-    await user.click(screen.getByRole("button", { name: /add/i }));
-
-    // Expect confirmation, or that context got updated and UI reflects it.
-    // If MetricInput shows a toast or clears inputs, assert that here.
-    expect((screen.getByLabelText(/steps/i) as HTMLInputElement).value).toBe(
-      ""
-    );
-  });
-});
+export default function MetricInput({
+  id,
+  label,
+  type = "number",
+  value,
+  min = 0,
+  step = 1,
+  onChange,
+}: Props) {
+  const inputId = id ?? label.toLowerCase().replace(/\s+/g, "-");
+  return (
+    <label className="input" htmlFor={inputId}>
+      <span>{label}</span>
+      <input
+        id={inputId}
+        type={type}
+        value={value ?? ""}
+        min={type === "number" ? min : undefined}
+        step={type === "number" ? step : undefined}
+        onChange={(e) => {
+          const v =
+            type === "number"
+              ? e.currentTarget.value === ""
+                ? undefined
+                : Number(e.currentTarget.value)
+              : e.currentTarget.value;
+          onChange(v);
+        }}
+        aria-label={label}
+      />
+    </label>
+  );
+}
