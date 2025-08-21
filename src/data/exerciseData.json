@@ -1,7 +1,7 @@
 [
   {
     "date": "2025-08-01",
-    "calories": 450,
+    "calories": 4500000,
     "durationMinutes": 40,
     "steps": 6200
   },
@@ -37,6 +37,48 @@
   },
   {
     "date": "2025-08-07",
+    "calories": 700,
+    "durationMinutes": 60,
+    "steps": 10050
+  },
+  {
+    "date": "2025-08-08",
+    "calories": 450,
+    "durationMinutes": 40,
+    "steps": 6200
+  },
+  {
+    "date": "2025-08-09",
+    "calories": 320,
+    "durationMinutes": 35,
+    "steps": 5800
+  },
+  {
+    "date": "2025-08-10",
+    "calories": 260,
+    "durationMinutes": 25,
+    "steps": 4200
+  },
+  {
+    "date": "2025-08-11",
+    "calories": 600,
+    "durationMinutes": 55,
+    "steps": 9100
+  },
+  {
+    "date": "2025-08-12",
+    "calories": 520,
+    "durationMinutes": 45,
+    "steps": 8000
+  },
+  {
+    "date": "2025-08-13",
+    "calories": 410,
+    "durationMinutes": 33,
+    "steps": 5600
+  },
+  {
+    "date": "2025-08-14",
     "calories": 700,
     "durationMinutes": 60,
     "steps": 10050

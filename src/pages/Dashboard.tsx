@@ -25,6 +25,7 @@ export default function Dashboard() {
       ? ((today.steps - avgSteps) / avgSteps) * 100
       : undefined;
 
+  console.log(data, rows, labels, steps, calories, duration); 
   return (
     <div className="page">
       <div className="grid3">

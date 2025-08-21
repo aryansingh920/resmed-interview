@@ -8,6 +8,9 @@ import React, {
 import raw from "../data/exerciseData.json";
 import { loadLocal, saveLocal } from "../utils/storage";
 
+console.log("raw", raw, raw.length, typeof raw, Array.isArray(raw), raw[0]);
+
+// console.log(raw);z
 export type Day = {
   date: string;
   steps?: number;
@@ -69,11 +72,18 @@ export const AppProvider: React.FC<React.PropsWithChildren> = ({
     [data, theme, range, selectedDate]
   );
 
+  useEffect(() => {
+    console.log("Context data length:", data.length);
+    console.log("Context data:", data);
+  }, [data]);
+
   return <AppCtx.Provider value={value}>{children}</AppCtx.Provider>;
 };
 
 export const useAppContext = () => {
   const ctx = useContext(AppCtx);
+  console.log("ctx", ctx);
+
   if (!ctx) throw new Error("useAppContext must be used within AppProvider");
   return ctx;
 };
