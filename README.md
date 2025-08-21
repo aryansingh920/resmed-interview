@@ -1,46 +1,187 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+#  Fitness Steps Tracker
 
-## Available Scripts
+A simple fitness tracking web app built with **Create React App (CRA)**, **TypeScript**, **React Context**, and **Chart.js (react-chartjs-2)**.  
+This project was developed by **Aryan Singh** specifically for the **ResMed interview**.
 
-In the project directory, you can run:
+The app demonstrates clean UI design, local JSON data integration, React state management, and data visualization using charts.  
+It tracks user exercise metrics such as **steps, calories burned, and workout duration**, stored locally without APIs.
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+##  Features
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+-  Load static JSON exercise data (`exerciseData.json`)  
+-  Display data in a React table (date, calories, steps, duration)  
+-  Visualize calories & steps over time using Chart.js  
+-  Clean, responsive styling with CSS  
+-  Local storage support for persistence  
+-  About page with project details and interview context  
+-  Modular file structure for maintainability  
+-  Unit tests & E2E tests (bonus setup-ready)  
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 📂 Project Structure
 
-### `npm run build`
+Below is the **detailed file structure** and description of each part of the app:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+src/
+│
+├── App.tsx
+├── index.tsx
+├── styles/
+│   └── globals.css
+│
+├── data/
+│   └── exerciseData.json
+│
+├── context/
+│   └── AppProvider.tsx
+│
+├── hooks/
+│   └── useApp.ts
+│
+├── utils/
+│   ├── dates.ts
+│   ├── stats.ts
+│   └── storage.ts
+│
+├── components/
+│   ├── AppHeader.tsx
+│   ├── StatCard.tsx
+│   ├── ChartCard.tsx
+│   ├── DataTable.tsx
+│   ├── MetricInput.tsx
+│   └── EmptyState.tsx
+│
+├── charts/
+│   ├── chartSetup.ts
+│   ├── Sparkline.tsx
+│   ├── WeeklyComboChart.tsx
+│   ├── TrendMultiLine.tsx
+│   └── DayVsAverageBar.tsx
+│
+├── pages/
+│   ├── Dashboard.tsx
+│   └── About.tsx
+│
+├── tests/
+│   ├── App.test.tsx
+│   └── e2e/
+│       └── basic.spec.ts
+│
+└── README.md   <-- this file
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+---
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+##  File Breakdown
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+###  Core
+- **`App.tsx`** → Root component, defines main routes and wraps everything in context.  
+- **`index.tsx`** → CRA entry point, renders `<App />` to the DOM.  
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+###  Styles
+- **`globals.css`** → Global theme variables, light/dark theme support, base typography.  
 
-## Learn More
+###  Data
+- **`exerciseData.json`** → Local dataset (no API). Example entry:
+  ```json
+  {
+    "date": "2025-08-01",
+    "calories": 450,
+    "durationMinutes": 40
+  }
+````
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+###  Context & Hooks
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+* **`AppProvider.tsx`** → Provides global state (data, filters, selected date).
+* **`useApp.ts`** → Custom hook to consume app context in components.
+
+###  Utilities
+
+* **`dates.ts`** → Helpers for date slicing, ranges, and formatting.
+* **`stats.ts`** → Stats calculations (averages, totals, comparisons).
+* **`storage.ts`** → LocalStorage persistence helpers.
+
+###  Components
+
+* **`AppHeader.tsx`** → Top navigation/header with title.
+* **`StatCard.tsx`** → Small metric cards (steps, calories, duration).
+* **`ChartCard.tsx`** → Wrapper for charts with titles and consistent layout.
+* **`DataTable.tsx`** → Displays exercise data in a clean, responsive table.
+* **`MetricInput.tsx`** → Input form to add new data points (date, steps, calories).
+* **`EmptyState.tsx`** → Placeholder UI when no data is present.
+
+###  Charts
+
+* **`chartSetup.ts`** → Configures Chart.js defaults (colors, fonts, tooltips).
+* **`Sparkline.tsx`** → Mini inline chart for step trends.
+* **`WeeklyComboChart.tsx`** → Line + bar combo chart (steps & calories vs. time).
+* **`TrendMultiLine.tsx`** → Multi-line chart showing steps vs. averages.
+* **`DayVsAverageBar.tsx`** → Bar chart comparing daily steps vs. average.
+
+###  Pages
+
+* **`Dashboard.tsx`** → Main app page showing summary cards, charts, and table.
+* **`About.tsx`** → Project description page:
+
+  > “Built by Aryan Singh for the ResMed Interview. CRA + TypeScript + React Context + Chart.js.”
+
+###  Tests
+
+* **`App.test.tsx`** → Jest + React Testing Library unit tests.
+* **`basic.spec.ts`** → Playwright/Cypress-style E2E smoke test.
+
+---
+
+##  Setup & Running
+
+### 1. Clone & Install
+
+```bash
+git clone https://github.com/aryansingh920/resmed-fitness-tracker.git
+cd resmed-fitness-tracker
+npm install
+```
+
+### 2. Run App
+
+```bash
+npm start
+```
+
+Runs on `http://localhost:3000/`.
+
+### 3. Run Tests
+
+```bash
+npm test
+```
+
+---
+
+## AI Usage
+
+AI assistance was used for:
+
+* Generating the initial React + TS + Chart.js scaffold.
+* Creating utility functions for date/stat handling.
+* Suggesting chart configuration (Chart.js dataset options).
+* Improving README clarity and project documentation.
+
+---
+
+
+## Author
+
+**Aryan Singh**
+ Dublin, Ireland
+[LinkedIn](https://www.linkedin.com/in/aryansingh920) | [GitHub](https://github.com/aryansingh920)
+
+---
