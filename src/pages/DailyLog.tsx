@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { useApp } from "../hooks/useApp";
 import MetricInput from "../components/MetricInput";
 import ChartCard from "../components/ChartCard";
@@ -9,12 +9,20 @@ import { parseISO, format } from "date-fns";
 
 export default function DailyLog() {
   const { data, setData, selectedDate, setSelectedDate } = useApp();
+  const [noteValue, setNoteValue] = useState("");
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
 
   const current = useMemo(() => {
     if (selectedDate)
       return data.find((d) => d.date === selectedDate) ?? data[data.length - 1];
     return data[data.length - 1];
   }, [data, selectedDate]);
+
+  // Update local note state when current day changes
+  useEffect(() => {
+    setNoteValue(current.note ?? "");
+    setHasUnsavedChanges(false);
+  }, [current.date, current.note]);
 
   const idx = data.findIndex((d) => d.date === current.date);
   const prevIso = data[Math.max(0, idx - 1)]?.date ?? null;
@@ -29,6 +37,21 @@ export default function DailyLog() {
     setData((prev) =>
       prev.map((d) => (d.date === current.date ? { ...d, ...patch } : d))
     );
+  };
+
+  const handleNoteChange = (value: string) => {
+    setNoteValue(value);
+    setHasUnsavedChanges(value !== (current.note ?? ""));
+  };
+
+  const saveNote = () => {
+    update({ note: noteValue });
+    setHasUnsavedChanges(false);
+  };
+
+  const discardChanges = () => {
+    setNoteValue(current.note ?? "");
+    setHasUnsavedChanges(false);
   };
 
   return (
@@ -90,11 +113,22 @@ export default function DailyLog() {
           <span>Notes</span>
           <textarea
             placeholder="e.g., Long walk at lunch"
-            value={current.note ?? ""}
-            onChange={(e) => update({ note: e.currentTarget.value })}
+            value={noteValue}
+            onChange={(e) => handleNoteChange(e.currentTarget.value)}
             rows={3}
           />
         </label>
+
+        {hasUnsavedChanges && (
+          <div className="note-actions">
+            <button onClick={saveNote} className="save-btn">
+              Save Note
+            </button>
+            <button onClick={discardChanges} className="discard-btn">
+              Discard
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
