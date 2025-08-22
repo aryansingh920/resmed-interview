@@ -13,10 +13,10 @@ export default function Dashboard() {
   const nav = useNavigate();
   const rows = useMemo(() => sliceByRange(data, range), [data, range]);
 
-  const labels = rows.map((r) => r.date);
-  const steps = rows.map((r) => r.steps ?? null);
-  const calories = rows.map((r) => r.calories);
-  const duration = rows.map((r) => r.durationMinutes);
+const labels = rows.map((r) => r.date);
+const steps = rows.map((r) => r.steps ?? null);
+const calories = rows.map((r) => r.calories);
+const duration = rows.map((r) => r.durationMinutes);
 
   const today = rows[rows.length - 1];
   const avgSteps = average(rows.map((r) => r.steps));

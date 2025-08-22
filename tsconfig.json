@@ -18,6 +18,9 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src"
+    "src",
+    "e2e/basic.spec.ts",
+    "e2e/routing.spec.ts",
+    "e2e/playwright.config.ts"
   ]
 }
