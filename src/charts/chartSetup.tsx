@@ -1,5 +1,4 @@
-// src/charts/chartSetup.tsx
-
+// src/charts/chartSetup.ts
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -13,10 +12,8 @@ import {
   Filler,
 } from "chart.js";
 
-// Import the adapter only if we're not in a test environment
-if (typeof window !== "undefined" && !process.env.JEST_WORKER_ID) {
-  import("chartjs-adapter-date-fns").catch(console.error);
-}
+// Synchronous import so the adapter is available immediately
+import "chartjs-adapter-date-fns";
 
 ChartJS.register(
   CategoryScale,
